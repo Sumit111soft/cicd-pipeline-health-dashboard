@@ -1,54 +1,68 @@
 # Requirement Analysis — CI/CD Pipeline Health Dashboard
 
+## 1. Overview
+The goal is to develop a **production-grade, containerized dashboard** that provides visibility into CI/CD workflows running on GitHub Actions.  
+The system should present key metrics like build success/failure rates, average build duration, and latest build status, along with build logs and automated failure alerts (via Slack or email).  
+The complete setup should be deployable using Docker, and the project should include a section describing how AI contributed to the solution development.
 
-## 1. Summary
-Build a dockerized, production-ready dashboard that collects CI/CD metrics from GitHub Actions, visualizes them (success/failure rate, average build time, last build status), stores recent build logs, and sends alerts (Slack/Email) for failed builds. Include documentation of AI involvement.
-
+---
 
 ## 2. Stakeholders
-- DevOps Engineers (primary users)
-- Developers (to see build health)
-- SRE / Platform teams
-- Project managers
+- **DevOps Engineers** — primary maintainers and users.
+- **Developers** — to monitor their code pipelines.
+- **SRE / Platform Teams** — for operational visibility.
+- **Project Managers** — for build health insights.
 
+---
 
-## 3. Goals / Success Criteria
-- Real-time (near real-time) visibility of GitHub Actions executions.
-- Alerting for failing pipelines within configurable thresholds (immediate or aggregated).
-- Easy deployment via Docker Compose.
-- Clear documentation and prompt log of AI usage.
+## 3. Objectives & Key Outcomes
+- Enable near real-time insights into CI/CD executions.
+- Provide automatic notifications for failing pipelines.
+- Offer a lightweight deployment process (`docker-compose up`).
+- Maintain complete documentation and an AI activity log.
 
+**Success Indicators:**
+- Metrics update automatically without manual triggers.
+- Alerts are configurable and delivered promptly.
+- Deployment runs consistently across environments.
 
-## 4. Metrics to collect
-- Pipeline run success rate (time-windowed: 24h, 7d, 30d).
-- Average build time (per workflow / repo / branch).
-- Last build status for tracked workflows.
-- Count of failed builds (by repo/branch/workflow).
-- Recent build logs (last N runs, searchable).
+---
 
+## 4. Metrics to be Captured
+- Pipeline success rate (daily / weekly / monthly).
+- Average workflow duration by repository, branch, or workflow.
+- Latest build status and timestamp.
+- Count and ratio of failed executions.
+- Recent build logs (limit configurable, searchable).
 
-## 5. Data sources & integration points
-- GitHub Actions REST API v3/v4 (Actions): to fetch runs and logs.
-- GitHub webhook (optional) to get events in near-real-time.
-- Slack Incoming Webhooks / Emails via SMTP or transactional service (e.g., SendGrid) for alerts.
+---
 
+## 5. Data Sources & Integrations
+- **GitHub Actions API (v3/v4)** — to retrieve workflow run data and logs.
+- **GitHub Webhooks (optional)** — for event-driven updates.
+- **Slack Webhook / SMTP or SendGrid** — to send failure notifications.
 
-## 6. Non-functional requirements
-- Dockerized, simple `docker-compose up` deployment.
-- Configurable via environment variables (GitHub token(s), DB URL, Slack webhook, alert thresholds).
-- Secure: store secrets in env only; support integration with vault later.
-- Scalable components (stateless backend, Postgres database for persistence).
-- Observability: logs + basic metrics endpoint for monitoring.
+---
 
+## 6. Non-Functional Requirements
+- **Containerized setup:** Deploy with Docker Compose.
+- **Configurable:** All secrets and parameters defined via environment variables (e.g., GitHub tokens, Slack webhook, DB connection).
+- **Security:** No hardcoded credentials; secrets must remain external.
+- **Scalability:** Backend services should remain stateless with persistent data stored in PostgreSQL.
+- **Monitoring:** Include logs and health endpoints for basic observability.
+
+---
 
 ## 7. Constraints & Assumptions
-- User will provide a GitHub personal access token (read: actions) with minimum scopes.
-- The central instance will poll GitHub or receive webhooks; polling frequency configurable.
-- For initial version, we support GitHub; later add GitLab/Bitbucket.
+- A GitHub personal access token with minimal read scopes (for Actions API) is required.
+- The system supports both polling and webhook-based modes for collecting pipeline data.
+- Version 1.0 will integrate only with GitHub; future versions can extend to GitLab or Bitbucket.
 
+---
 
-## 8. Acceptance criteria
-- Docker Compose can bring up backend, frontend, and Postgres DB.
-- Dashboard shows last build status and success rate for at least one repo/workflow.
-- Failed-build Slack notifications are sent after a failed run.
-- Prompt logs and AI-docs are included in repo.
+## 8. Acceptance Criteria
+- `docker-compose up` successfully runs backend, frontend, and Postgres services.
+- Dashboard accurately displays latest build data for at least one GitHub workflow.
+- Failure alerts are automatically pushed to Slack after unsuccessful builds.
+- Project includes comprehensive AI usage and prompt logs as part of documentation.
+
