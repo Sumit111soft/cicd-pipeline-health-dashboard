@@ -4,11 +4,11 @@
 A dashboard to collect and visualize GitHub Actions pipeline metrics and alert on failures.
 
 ## Technology Stack
-Backend: Python 3.11+
-Frontend: React with Vite and Tailwind CSS
-Database: PostgreSQL
-Deployment: Containerized setup using Docker
-Alerting: Slack Webhooks
+- Backend: Python 3.11+
+- Frontend: React with Vite and Tailwind CSS
+- Database: PostgreSQL
+- Deployment: Containerized setup using Docker
+- Alerting: Slack Webhooks
 
 ## Quick start (development)
 1. Copy `.env` files and fill values (GITHUB_TOKEN, SLACK_WEBHOOK_URL) if you plan to connect GitHub/Slack.
